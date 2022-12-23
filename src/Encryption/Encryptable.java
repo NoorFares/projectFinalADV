@@ -1,4 +1,4 @@
-package AdapterDesignPattern.com;
+package Encryption;
 
 public interface Encryptable {
     String encrypt(String fileName);

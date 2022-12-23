@@ -1,4 +1,4 @@
-package AdapterDesignPattern.com;
+package Encryption;
 public class FileNameEncryptorAdapter implements Encryptable {
     private FileNameEncryptor encryptor;
     private static final int SHIFT=8;

@@ -1,4 +1,4 @@
-package AdapterDesignPattern.com;
+package Encryption;
 
 public class FileNameEncryptor {
     public static String encrypt(String plaintext, int shift) {
