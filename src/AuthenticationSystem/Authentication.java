@@ -22,11 +22,9 @@ public class Authentication {
     private static final String INVALID_CHOICE ="Invalid choice";
     private static final String CLOSEING_DATABASE ="Closing database connection";
 
-    public static void main(String[] args) {
+    public static void authentication(Connection connection, Statement statement) {
 
         Scanner sc = new Scanner(System.in);
-        Connection connection = null;
-        Statement statement = null;
         try {
             connection= DBConnection.getConnection();
             statement = connection.createStatement();
