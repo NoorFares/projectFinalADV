@@ -11,16 +11,16 @@ import java.util.logging.Logger;
 public class Authentication {
 
     private static final Logger logger = Logger.getLogger(Authentication.class.getName());
-    private static final int LOGIN =1;
-    private static final int SIGN_UP =2;
-    private static final int EXIT =3;
+
     private static final String LOGIN_CHOICE ="1. Login";
     private static final String SIGN_UP_CHOICE ="2. Sign up";
     private static final String EXIT_CHOICE ="3. Exit";
     private static final String ENTER_CHOICE ="Enter choice: ";
-    private static final String AUTHENTICATION ="Authentication";
     private static final String INVALID_CHOICE ="Invalid choice";
-    private static final String CLOSEING_DATABASE ="Closing database connection";
+    private static final String AUTHENTICATION ="Authentication";
+    private static final String DO_LOGIN ="Logging in to the system";
+    private static final String DO_SIGN_UP ="Signing up to the system";
+    private static final String CLOSING_DATABASE ="Closing database connection";
 
     public static void authentication(Connection connection, Statement statement) {
 
@@ -30,30 +30,34 @@ public class Authentication {
             statement = connection.createStatement();
             logger.info(AUTHENTICATION);
 
-            while (true) {
-                System.out.println(LOGIN_CHOICE);
-                System.out.println(SIGN_UP_CHOICE);
-                System.out.println(EXIT_CHOICE);
-                System.out.print(ENTER_CHOICE);
-                int choice = sc.nextInt();
-                sc.nextLine();
-                if (choice == LOGIN) {
+            System.out.println(LOGIN_CHOICE);
+            System.out.println(SIGN_UP_CHOICE);
+            System.out.println(EXIT_CHOICE);
+            System.out.print(ENTER_CHOICE);
+            int choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice){
+                case 1:
                     Login.login(statement);
-                } else if (choice == SIGN_UP) {
-                   SignUp.signUp(statement);
-                } else if (choice == EXIT) {
+                    logger.info(DO_LOGIN);
                     break;
-                } else {
+                case 2:
+                    SignUp.signUp(statement);
+                    logger.info(DO_SIGN_UP);
+                    break;
+                case 3:
+                    logger.info(EXIT_CHOICE);
+                    break;
+                default:
                     System.out.println(INVALID_CHOICE);
-                }
             }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
-            CloseConnection.closeConnection(connection, statement);
-            logger.info(CLOSEING_DATABASE);
+            CloseConnection.closeConnection();
+            logger.info(CLOSING_DATABASE);
         }
     }
 }

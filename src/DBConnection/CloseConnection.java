@@ -3,18 +3,6 @@ package DBConnection;
 import java.sql.*;
 
 public class CloseConnection {
-    public static void closeConnection(Connection connection, Statement statement){
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-            if (statement != null) {
-                statement.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     public static void closeConnection(){
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
