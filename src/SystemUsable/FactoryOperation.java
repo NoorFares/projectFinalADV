@@ -1,16 +1,12 @@
 package SystemUsable;
-
 import AuthenticationSystem.Authentication;
 import SystemUsable.User.User;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-
 public class FactoryOperation {
     private static final Logger logger = Logger.getLogger(FactoryOperation.class.getName());
-
     private static final String ADMIN_MESSAGE = "Admin create action";
     private static final String STAFF_MESSAGE = "Staff create action";
     private static final String IMPORT="IMPORT";
@@ -24,11 +20,13 @@ public class FactoryOperation {
     public  static Operation createObject(String operation, User user, File f) throws SQLException, IOException {
         Operation operation1=null;
         if (user == SystemUsable.User.User.ADMIN) {
-        operation1=    adminOperation(operation);
-            logger.info(ADMIN_MESSAGE);
+        operation1= adminOperation(operation);
+
+            logger.info(ADMIN_MESSAGE);return operation1;
         } else if (user == SystemUsable.User.User.STAFF) {
          operation1=   StaffOperation(operation);
             logger.info(STAFF_MESSAGE);
+            return operation1;
         } else if (user == SystemUsable.User.User.READER) {
             operation1=new ReadOperation();
             return operation1;
@@ -40,7 +38,7 @@ public class FactoryOperation {
 
     public static Operation adminOperation(String operation) throws SQLException, IOException {
     Operation operation1=null;
-    File f=new File("C:\\Users\\Msys\\Desktop\\Adv.pdf");
+    File f=new File("C:\\Users\\Msys\\Desktop\\noor.txt");
             switch (operation) {
                 case IMPORT:
                     operation1=  new ImportOperation();
@@ -56,15 +54,18 @@ public class FactoryOperation {
                 operation1.execute(f);
                 return operation1;
             case READ:
-              operation1= (Operation) new ReadOpreation();
+              operation1= new ReadOperation();
               operation1.execute(f);
               return operation1;
             case OVERWRITE:
                 operation1= new OverwriteOperation();
+                operation1.execute(f);
+                return operation1;
 
             case ROLLBACK:
                operation1=  new Rollback();
               operation1.execute(f);
+                return operation1;
         }
         throw new IllegalArgumentException(INVALID_OPERATION);
 
@@ -72,6 +73,7 @@ public class FactoryOperation {
 
     public static Operation StaffOperation(String operation){
         Operation operation1=null;
+        File f=new File("C:\\Users\\Msys\\Desktop\\sample.json");
         switch (operation) {
             case IMPORT:
               operation1= new ImportOperation();
