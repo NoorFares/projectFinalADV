@@ -5,7 +5,7 @@ To authenticate users, you could use a secure login system   you could create yo
 
 To implement different levels of permissions for different types of users, you could use a role-based access control system. This would involve assigning different users to different roles (such as "admin," "staff," and "reader") and defining the specific actions that each role is allowed to perform. For example, you could allow admins to have full access to the system, staff to have import/export access but not delete or overwrite files, and readers to have read-only access.
 
-To ensure that the system is secure, you could use encryption to protect the files stored in the system. This could involve using a secure encryption algorithm such as AES to encrypt the files before they are stored, and then decrypting them when they are accessed.
+To ensure that the system is secure, you could use encryption to protect the files stored in the system. This could involve using a secure encryption algorithm  to encrypt the files before they are stored the file 
 
 To make the system available and able to handle requests within 1 second for any file size, you could consider using a distributed system design with multiple servers to handle the load. You could also optimize the system for performance by using caching, load balancing, and other performance-enhancing techniques.
 
