@@ -3,6 +3,9 @@ package SystemUsable;
 import AuthenticationSystem.Authentication;
 import SystemUsable.User.User;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class FactoryOperation {
@@ -18,49 +21,64 @@ public class FactoryOperation {
     private static final String  ROLLBACK="ROLLBACK";
     private static final String INVALID_OPERATION="Invalid operation type";
     private static final String INVALID_ROLE="Invalid role type";
-
-
-    public  static Operation createObject(String operation, User user) {
+    public  static Operation createObject(String operation, User user, File f) throws SQLException, IOException {
+        Operation operation1=null;
         if (user == SystemUsable.User.User.ADMIN) {
-            adminOperation(operation);
+        operation1=    adminOperation(operation);
             logger.info(ADMIN_MESSAGE);
         } else if (user == SystemUsable.User.User.STAFF) {
-            StaffOperation(operation);
+         operation1=   StaffOperation(operation);
             logger.info(STAFF_MESSAGE);
         } else if (user == SystemUsable.User.User.READER) {
-            return (Operation) new ReadOpreation();
+            operation1=new ReadOperation();
+            return operation1;
         } else {
             System.out.println(INVALID_ROLE);
         }
-        throw new IllegalArgumentException(INVALID_OPERATION);
+        return null;
     }
 
-    public static Operation adminOperation(String operation){
+    public static Operation adminOperation(String operation) throws SQLException, IOException {
+    Operation operation1=null;
+    File f=new File("C:\\Users\\Msys\\Desktop\\Adv.pdf");
+            switch (operation) {
+                case IMPORT:
+                    operation1=  new ImportOperation();
+                    operation1.execute(f);
+                    return operation1;
+                case EXPORT:
+                   operation1= new ExportOperation();
+                operation1.execute(f);
+                return operation1;
 
-        switch (operation) {
-            case IMPORT:
-                return (Operation) new ImportOperation();
-            case EXPORT:
-                return (Operation) new ExportOperation();
             case DELETE:
-                return (Operation) new DeleteOperation();
+                operation1=  new DeleteOperation();
+                operation1.execute(f);
+                return operation1;
             case READ:
-                return (Operation) new ReadOpreation();
+              operation1= (Operation) new ReadOpreation();
+              operation1.execute(f);
+              return operation1;
             case OVERWRITE:
-                return (Operation) new OverwriteOperation();
+                operation1= new OverwriteOperation();
+
             case ROLLBACK:
-                return (Operation) new Rollback();
+               operation1=  new Rollback();
+              operation1.execute(f);
         }
         throw new IllegalArgumentException(INVALID_OPERATION);
 
     }
 
     public static Operation StaffOperation(String operation){
+        Operation operation1=null;
         switch (operation) {
             case IMPORT:
-                return (Operation) new ImportOperation();
+              operation1= new ImportOperation();
+              return operation1;
             case EXPORT:
-                return (Operation) new ExportOperation();
+              operation1= new ExportOperation();
+              return operation1;
         }
         throw new IllegalArgumentException(INVALID_OPERATION);
     }
