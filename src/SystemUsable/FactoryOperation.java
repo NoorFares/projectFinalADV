@@ -20,11 +20,11 @@ public class FactoryOperation {
     public  static Operation createObject(String operation, User user, File f) throws SQLException, IOException {
         Operation operation1=null;
         if (user == SystemUsable.User.User.ADMIN) {
-        operation1= adminOperation(operation);
-
-            logger.info(ADMIN_MESSAGE);return operation1;
+        operation1= adminOperation(operation,f);
+            logger.info(ADMIN_MESSAGE);
+            return operation1;
         } else if (user == SystemUsable.User.User.STAFF) {
-         operation1=   StaffOperation(operation);
+         operation1=   StaffOperation(operation,f);
             logger.info(STAFF_MESSAGE);
             return operation1;
         } else if (user == SystemUsable.User.User.READER) {
@@ -35,10 +35,9 @@ public class FactoryOperation {
         }
         return null;
     }
-
-    public static Operation adminOperation(String operation) throws SQLException, IOException {
+    public static Operation adminOperation(String operation,File f) throws SQLException, IOException {
     Operation operation1=null;
-    File f=new File("C:\\Users\\Msys\\Desktop\\noor.txt");
+
             switch (operation) {
                 case IMPORT:
                     operation1=  new ImportOperation();
@@ -71,16 +70,18 @@ public class FactoryOperation {
 
     }
 
-    public static Operation StaffOperation(String operation){
+    public static Operation StaffOperation(String operation,File f) throws SQLException, IOException {
         Operation operation1=null;
-        File f=new File("C:\\Users\\Msys\\Desktop\\sample.json");
         switch (operation) {
             case IMPORT:
               operation1= new ImportOperation();
+              operation1.execute(f);
               return operation1;
             case EXPORT:
               operation1= new ExportOperation();
+              operation1.execute(f);
               return operation1;
+
         }
         throw new IllegalArgumentException(INVALID_OPERATION);
     }
