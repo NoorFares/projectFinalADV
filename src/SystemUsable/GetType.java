@@ -1,7 +1,5 @@
-package FileRepositroy;
-
+package SystemUsable;
 import java.io.File;
-
 public class GetType {
     public static String getType(File file){
         String extension = "";
